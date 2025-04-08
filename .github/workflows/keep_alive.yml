@@ -1,0 +1,15 @@
+name: Keep Alive
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # 12시간마다 실행
+  workflow_dispatch:  # 수동 실행 옵션 추가
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send HTTP GET request
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" https://jeniapp.streamlit.app
+          echo "Ping sent to keep the app alive"
